@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from django.core.management.utils import get_random_secret_key
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = "django-insecure-7rfq+d61mdn53@j4y@ctek4e8&ovb_po&y=!t%bo3))!do72*s"
-SECRET_KEY = os.environ.get("SECRET_KEY", SECRET_KEY)  # set on Render
+# Get the secret key from environment variables
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
+# If SECRET_KEY is not set in environment variables, raise an error
+# This is the recommended approach for production deployments
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY not set in environment variables.")
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
