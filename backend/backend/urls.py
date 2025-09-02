@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from backend.views import FrontendAppView  # Import your FrontendAppView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,6 +30,10 @@ urlpatterns = [
         "api/notifications/", include("notifications.urls")
     ),  # notifications app endpoints
     path("api/chat/", include("chat.urls")),  # chat app endpoints
+    # Serve React frontend (must be last)
+    path("", FrontendAppView.as_view(), name="home"),
+    # For client-side routing (e.g., /courses/5)
+    path("<path:resource>", FrontendAppView.as_view(), name="nested"),
 ]
 
 if settings.DEBUG:

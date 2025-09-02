@@ -110,8 +110,11 @@ DATABASES = {
 }
 
 # Serve React frontend static files
+# Point to the full Vite build output
+FRONTEND_DIR = os.path.join(BASE_DIR, "../frontend")
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/build/static"),
+    os.path.join(FRONTEND_DIR, "dist"),  # This contains index.html + assets
 ]
 
 # Password validation
