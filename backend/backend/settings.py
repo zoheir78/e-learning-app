@@ -40,7 +40,7 @@ DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 ALLOWED_HOSTS = (
     os.environ.get("ALLOWED_HOSTS", "").split(",")
     if os.environ.get("ALLOWED_HOSTS")
-    else ["localhost"]
+    else ["localhost", "e-learning-app-1h4n.onrender.com"]
 )
 
 
