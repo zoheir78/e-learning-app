@@ -1,27 +1,22 @@
-"""
-ASGI config for backend project.
-
-It exposes the ASGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/
-"""
-
 import os
+import django
+from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from django.core.asgi import get_asgi_application
-import chat.routing
 
+# 1. Set settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
-# 👉 Add this line: This fixes the AppRegistryNotReady error
-import django
 
+# 2. Setup Django apps before importing anything that touches models
 django.setup()
 
+# 3. Now it's safe to import routing (which imports consumers)
+from chat.routing import websocket_urlpatterns  # Import after setup!
+
+# 4. Define application
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
-        "websocket": AuthMiddlewareStack(URLRouter(chat.routing.websocket_urlpatterns)),
+        "websocket": AuthMiddlewareStack(URLRouter(websocket_urlpatterns)),
     }
 )
