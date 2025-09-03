@@ -1,14 +1,23 @@
 
 import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/api/";
 
-// Create axios instance with base URL
 const api = axios.create({
-  baseURL: "http://localhost:8081/api/", // Django backend
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: false, // JWT is sent via Authorization header
+  withCredentials: false,
 });
+
+// Create axios instance with base URL
+// const api = axios.create({
+//   baseURL: "https://e-learning-app-1h4n.onrender.com/api/", // ✅ Deployed backend
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   withCredentials: false, // JWT is sent via Authorization header
+// });
 
 // -------------------
 // AUTH HELPERS
